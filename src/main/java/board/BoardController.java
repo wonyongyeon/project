@@ -19,6 +19,7 @@ import comment.CommentService;
 import comment.CommentVo;
 import user.UserVo;
 import util.CommonUtil;
+import util.CommonVo;
 
 @Controller
 public class BoardController {
@@ -42,7 +43,7 @@ public class BoardController {
 		model.addAttribute("list",list);
 		model.addAttribute("totPage",totPage);
 		model.addAttribute("totCount",totCount);
-		model.addAttribute("pageArea",CommonUtil.getPageArea("index.do", vo.getPage(), totPage, 10));		
+		model.addAttribute("pageArea",CommonUtil.getPageArea("index.do", vo.getPage(), totPage, 10, vo));		
 		return "board/index";
 	}
 	@RequestMapping("/board/write.do")
@@ -84,12 +85,12 @@ public class BoardController {
 		}
 
 	@GetMapping("/board/view.do")
-	public String view(Model model, @RequestParam int boardno) {
-		model.addAttribute("data", boardService.view(boardno));
-		CommentVo cv = new CommentVo();
-		cv.setBoardno(boardno);
+	public String view(Model model, BoardVo vo) {
+		model.addAttribute("data", boardService.view(vo.getBoardno()));		
+		CommentVo cv = new CommentVo();					
+		cv.setBoardno(vo.getBoardno());
 		cv.setTablename("board");
-		model.addAttribute("cList", cService.selectList(cv));
+		model.addAttribute("cList", cService.selectList(cv));		
 		return "board/view";
 	}
 	

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="util.CommonUtil" %>
+<%@ page import="util.CommonUtil1" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,12 +19,12 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="/project/js/common.js"></script>
     <script>
-    	$(function(){
-    		$(".board_tr").click(function(){
-    			location.href='view.do?boardno='+$(this).data("boardno");
+    	//$(function(){
+    		//$(".board_tr").click(function(){
+    			//location.href='view.do?boardno='+$(this).data("boardno");
     			//console.log($(this).data("boardno"));
-    		});
-    	});    	
+    		//});
+    	//});    	
     </script>
 </head>
 <body>
@@ -60,10 +60,10 @@
                                 <td class="first" colspan="5">등록된 글이 없습니다.</td>
                             </tr>
 						</c:if>
-                        <c:if test="${!empty list}">
-                        	<c:forEach var="vo" items="${list}" varStatus="status">
-                            <!-- <tr onclick="location.href='view.do?boardno=${vo.boardno}'" style="cursor:pointer;"> -->
-                            <tr class="board_tr" data-boardno="${vo.boardno}" style="cursor:pointer;">
+                        <c:if test="${!empty list}">                        
+                        	<c:forEach var="vo" items="${list}" varStatus="status">                        	                        	                        	
+                            <tr onclick="location.href='view.do?boardno=${vo.boardno}&searchType=${boardVo.searchType }&searchWord=${boardVo.searchWord }'" style="cursor:pointer;">                             
+                            <!-- <tr class="board_tr" data-boardno="${vo.boardno}" style="cursor:pointer;"> -->                           
                                 <td>${(totCount-status.index) - ((boardVo.page-1)*10)} </td>
                                 <td class="txt_l" style="text-align:left;">
                                     ${vo.title } [${vo.c_count }]
@@ -92,7 +92,7 @@
                                    
                     <!-- /페이지처리 -->
                     <div class="bbsSearch">
-                        <form method="get" name="searchForm" id="searchForm" action="">
+                        <form method="get" name="searchForm" id="searchForm" action="">                        
                             <span class="srchSelect">
                                 <select id="stype" name="searchType" class="dSelect" title="검색분류 선택">
                                     <option value="">전체</option>

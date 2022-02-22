@@ -106,8 +106,13 @@
                         </dl>
                                     
                         <div class="btnSet clear">
-                            <div class="fl_l">
+                            <div class="fl_l"> 
+	                        <c:if test="${!empty boardVo.searchWord}">
+                            	<a href="index.do?searchType=${boardVo.searchType}&searchWord=${boardVo.searchWord}" class="btn">목록으로</a>
+                           	</c:if>
+                           	<c:if test="${empty boardVo.searchWord}">
                             	<a href="index.do" class="btn">목록으로</a>
+                           	</c:if>
                             	<a href="edit.do?boardno=${data.boardno }" class="btn">수정</a>
                             	<a href="javascript:del();" class="btn">삭제</a>
                             </div>

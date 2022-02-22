@@ -1,7 +1,7 @@
 package util;
 
 public class CommonUtil {
-	public static String getPageArea(String url, int curPage, int totPage, int pageRange) {
+	public static String getPageArea(String url, int curPage, int totPage, int pageRange, CommonVo vo) {
 		// 페이지 범위
 		int startPage = (curPage-1)/pageRange*pageRange+1; // 시작페이지
 		int endPage = startPage + pageRange - 1; // 종료페이지
@@ -10,13 +10,19 @@ public class CommonUtil {
 		String ret = "";
 		ret += "<div class=\"pagenate clear\" id=\"pagenate\">\r\n"
 				+ "                        <ul class='paging'>\r\n";
-				if (startPage > pageRange) {				
-					ret += "                        	<li><a href=\""+url+"?page="+(startPage-1)+"\"> < </a>\r\n";
+				if (startPage > pageRange) {						
+					ret += "                        	<li><a href=\""+url+"?page="+(startPage-1)+"\"> < </a>\r\n";					
 				}
 				for (int rp = startPage; rp <= endPage; rp++) {
-					ret += "                            <li><a href='javascript:location.href=\""+url+"?page="+rp+"\";'"; 
-					if (rp == curPage)  ret += "class='current'";
-					ret += ">"+rp+"</a></li>\r\n";
+					if (vo.getSearchWord() != null && rp > 1) { // 검색어 포함 페이징처리
+						ret += "                            <li><a href='javascript:location.href=\""+url+"?page="+rp+"&searchType="+vo.getSearchType()+"&searchWord="+vo.getSearchWord()+"\";'"; 
+						if (rp == curPage)  ret += "class='current'";
+						ret += ">"+rp+"</a></li>\r\n";
+					} else {
+						ret += "                            <li><a href='javascript:location.href=\""+url+"?page="+rp+"\";'"; 
+						if (rp == curPage)  ret += "class='current'";
+						ret += ">"+rp+"</a></li>\r\n";
+					}
 				}
 				if (totPage > endPage)
 					ret += "                        	<li><a href=\""+url+"?page="+(endPage+1)+"\"> > </a>\r\n";
